@@ -9,3 +9,6 @@ build
 # misc
 .DS_Store
 npm-debug.log
+
+# Contains sensitive information such as API keys
+src/config.js

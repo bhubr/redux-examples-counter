@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import thunkMiddleware from 'redux-thunk';
+import { createLogger } from 'redux-logger';
 import App from './components/App';
 import reducers from './reducers';
 import {
@@ -20,10 +22,14 @@ import movies2 from './fixtures/movies2';
 //
 // var arr = [{ id: 1, title: 'Her' }, { id: 2, title: 'Snatch' }];
 // console.log('findById', findById(1, arr), findById(4, arr));
+const loggerMiddleware = createLogger();
 
 const store = createStore(reducers, {
   counter: 10, session: null
-});
+}, applyMiddleware(
+  thunkMiddleware,
+  loggerMiddleware
+));
 
 // Log the initial state
 console.log(store.getState());
@@ -44,10 +50,10 @@ store.dispatch(decrement());
 store.dispatch(logout());
 store.dispatch(login({ email: 'danaerystargaryen@got.tv' }));
 store.dispatch(logout());
-store.dispatch(searchMovies('Phantom'));
-store.dispatch(receiveMovies(movies1));
-store.dispatch(searchMovies('Phantom of'));
-store.dispatch(receiveMovies(movies2));
+// store.dispatch(searchMovies('Phantom'));
+// store.dispatch(receiveMovies(movies1));
+// store.dispatch(searchMovies('Phantom of'));
+// store.dispatch(receiveMovies(movies2));
 
 const render = () => ReactDOM.render(
   <Provider store={store}>

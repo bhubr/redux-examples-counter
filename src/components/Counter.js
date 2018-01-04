@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import {
   increment, decrement
 } from '../actions';
@@ -14,16 +14,16 @@ class UnboundCounter extends Component {
 
   incrementIfOdd() {
     if (this.props.value % 2 !== 0) {
-      this.props.onIncrement()
+      this.props.onIncrement();
     }
   }
 
   incrementAsync() {
-    setTimeout(this.props.onIncrement, 1000)
+    setTimeout(this.props.onIncrement, 1000);
   }
 
   render() {
-    const { value, onIncrement, onDecrement } = this.props
+    const { value, onIncrement, onDecrement } = this.props;
     return (
       <p>
         Clicked: {value} times
@@ -44,7 +44,7 @@ class UnboundCounter extends Component {
           Increment async
         </button>
       </p>
-    )
+    );
   }
 }
 
@@ -52,24 +52,24 @@ UnboundCounter.propTypes = {
   value: PropTypes.number.isRequired,
   onIncrement: PropTypes.func.isRequired,
   onDecrement: PropTypes.func.isRequired
-}
+};
 
 const mapStateToProps = state => {
   return {
     value: state.counter
-  }
-}
+  };
+};
 
 const mapDispatchToProps = dispatch => {
   return {
     onIncrement: () => dispatch(increment()),
     onDecrement: () => dispatch(decrement())
-  }
-}
+  };
+};
 
 const Counter = connect(
   mapStateToProps,
   mapDispatchToProps
-)(UnboundCounter)
+)(UnboundCounter);
 
-export default Counter
+export default Counter;
