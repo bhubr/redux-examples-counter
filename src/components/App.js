@@ -1,13 +1,24 @@
-import Counter from './Counter'
-import Navbar from './Navbar'
-import React, { Component } from 'react'
+import Counter from './Counter';
+import Navbar from './Navbar';
+import MovieList from './MovieList';
+import React, { Component } from 'react';
 
 export default class App extends Component {
   render() {
     return (
-      <div>
+      <div className="container-fluid">
         <Navbar />
-        <Counter />
+        <div className="row">
+          <div className="col-sm">
+            <Counter />
+          </div>
+          <div className="col-sm">
+            <MovieList />
+          </div>
+          <div className="col-sm">
+            One of three columns
+          </div>
+        </div>
       </div>
     )
   }

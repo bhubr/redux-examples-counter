@@ -28,19 +28,19 @@ class UnboundCounter extends Component {
       <p>
         Clicked: {value} times
         {' '}
-        <button onClick={onIncrement}>
+        <button className="btn" onClick={onIncrement}>
           +
         </button>
         {' '}
-        <button onClick={onDecrement}>
+        <button className="btn" onClick={onDecrement}>
           -
         </button>
         {' '}
-        <button onClick={this.incrementIfOdd}>
+        <button className="btn" onClick={this.incrementIfOdd}>
           Increment if odd
         </button>
         {' '}
-        <button onClick={this.incrementAsync}>
+        <button className="btn" onClick={this.incrementAsync}>
           Increment async
         </button>
       </p>
