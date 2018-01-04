@@ -3,24 +3,33 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import App from './components/App';
 // import db from './db';
-// import {
-//   increment,
-//   decrement,
-//   login,
-//   logout,
-//   setMovieQuery,
-// receiveMovies
-//   searchMovies,
-// } from './actions';
+import {
+  // increment,
+  // decrement,
+  // login,
+  // logout,
+  // setMovieQuery,
+  // receiveMovies
+  // searchMovies,
+  registerUser
+} from './actions';
 // import movies1 from './fixtures/movies1';
 // import movies2 from './fixtures/movies2';
 import initStore from './initStore';
-import {
-  loadState,
-  saveState
-} from './persist';
+import persist from './persist';
+// import {
+//   init
+// } from './db';
+import config from './config';
+const { storageKeys } = config;
 
-const initialState = loadState() || {};
+// init();
+const initialState = persist.load(storageKeys.state) || {};
+
+// const usersState = persist.load(storageKeys.users);
+// const { records } = usersState;
+// initialState.users.items = [...records];
+// persist.save(storageKeys.state, initialState);
 const store = initStore(initialState);
 
 //
@@ -37,7 +46,7 @@ const store = initStore(initialState);
 // Note that subscribe() returns a function for unregistering the listener
 // const unsubscribe =
 store.subscribe(() =>
-  saveState(store.getState())
+  persist.save(storageKeys.state, store.getState())
 );
 
 // console.log('dispatch increment');
@@ -53,6 +62,9 @@ store.subscribe(() =>
 // store.dispatch(receiveMovies(movies1));
 // store.dispatch(searchMovies('Phantom of'));
 // store.dispatch(receiveMovies(movies2));
+// setTimeout(() => {
+//   store.dispatch(registerUser({ email: 'toto.' + Date.now().toString(36) + '@pouet.com', password: 'toto' }));
+// }, 400);
 
 const render = () => ReactDOM.render(
   <Provider store={store}>

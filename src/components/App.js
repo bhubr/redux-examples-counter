@@ -2,6 +2,8 @@ import Counter from './Counter';
 import Navbar from './Navbar';
 import MovieSearchBox from './MovieSearchBox';
 import MovieList from './MovieList';
+import Register from './Register';
+import UserList from './UserList';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
@@ -31,7 +33,8 @@ class App extends Component {
             <MovieList />
           </div>
           <div className="col-sm">
-            One of three columns
+            <Register />
+            <UserList />
           </div>
         </div>
       </div>

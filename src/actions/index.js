@@ -1,4 +1,7 @@
 import config from '../config';
+import {
+  insertUser
+} from '../db';
 const { tmdbApiKey } = config;
 
 export const INCREMENT = 'INCREMENT';
@@ -8,6 +11,10 @@ export const LOGOUT    = 'LOGOUT';
 // export const SET_QUERY = 'SET_QUERY';
 export const SEARCH_MOVIES = 'SEARCH_MOVIES';
 export const RECEIVE_MOVIES = 'RECEIVE_MOVIES';
+
+export const REGISTER_USER = 'REGISTER_USER';
+export const REGISTER_USER_SUCCESS = 'REGISTER_USER_SUCCESS';
+export const REGISTER_USER_ERROR = 'REGISTER_USER_ERROR';
 
 export function increment() {
   return { type: INCREMENT };
@@ -43,6 +50,38 @@ export function receiveMovies(json) {
   return {
     type: RECEIVE_MOVIES,
     movies: json.results
+  };
+}
+
+export function requestRegisterUser(user) {
+  return {
+    type: REGISTER_USER,
+    user
+  };
+}
+
+export function registerUserSuccess(user) {
+  console.log('registerUserSuccess', user);
+  return {
+    type: REGISTER_USER_SUCCESS,
+    user
+  };
+}
+
+export function registerUserError(error) {
+  return {
+    type: REGISTER_USER_ERROR,
+    error
+  };
+}
+
+export function registerUser(user)  {
+  return dispatch => {
+    console.log('registerUser', user);
+    dispatch(requestRegisterUser(user));
+    return insertUser(user)
+    .then(user => dispatch(registerUserSuccess(user)))
+    .catch(err => dispatch(registerUserError(err)));
   };
 }
 

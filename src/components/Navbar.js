@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   login, logout
 } from '../actions';
-import {
-  clearState
-} from '../persist';
+import persist from '../persist';
+import config from '../config';
+const { storageKeys } = config;
 
 class UnboundNavbar extends Component {
   constructor(props) {
@@ -14,7 +14,7 @@ class UnboundNavbar extends Component {
   }
 
   onClearState() {
-    clearState();
+    persist.clear(storageKeys.state);
     window.location.reload();
   }
 

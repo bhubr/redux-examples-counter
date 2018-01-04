@@ -1,30 +1,36 @@
 /* global localStorage */
-import config from './config';
-const { localStorageKey } = config;
 
-export function saveState(state) {
-  console.log('Saving state');
-  localStorage.setItem(
-    localStorageKey, JSON.stringify( state )
-  );
-}
+class Persist {
 
-export function loadState() {
-  const json = localStorage.getItem(localStorageKey);
-  if(! json) {
-    return null;
+  save(storageKey, data) {
+    console.log('Saving data', storageKey);
+    localStorage.setItem(
+      storageKey, JSON.stringify( data )
+    );
   }
-  try {
-    const state = JSON.parse(json);
-    console.log('Loading state', state);
-    return state;
-  } catch(e) {
-    console.error('Exception while parsing persisted state', e);
-    clearState();
-    return null;
+
+  load(storageKey) {
+    const json = localStorage.getItem(storageKey);
+    if(! json) {
+      return null;
+    }
+    try {
+      const data = JSON.parse(json);
+      console.log('Loading ', storageKey, data);
+      return data;
+    } catch(e) {
+      console.error('Exception while parsing persisted data', storageKey, e);
+      this.clear(storageKey);
+      return null;
+    }
   }
+
+  clear(storageKey) {
+    console.log('Clearing ', storageKey);
+    localStorage.removeItem(storageKey);
+  }
+
 }
 
-export function clearState() {
-  localStorage.removeItem(localStorageKey);
-}
+const persist = new Persist();
+export default persist;
