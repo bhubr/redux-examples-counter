@@ -1,55 +1,54 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import thunkMiddleware from 'redux-thunk';
-import { createLogger } from 'redux-logger';
 import App from './components/App';
-import reducers from './reducers';
+// import db from './db';
+// import {
+//   increment,
+//   decrement,
+//   login,
+//   logout,
+//   setMovieQuery,
+// receiveMovies
+//   searchMovies,
+// } from './actions';
+// import movies1 from './fixtures/movies1';
+// import movies2 from './fixtures/movies2';
+import initStore from './initStore';
 import {
-  increment,
-  decrement,
-  login,
-  logout,
-  // setMovieQuery,
-  searchMovies,
-  receiveMovies
-} from './actions';
-import movies1 from './fixtures/movies1';
-import movies2 from './fixtures/movies2';
+  loadState,
+  saveState
+} from './persist';
+
+const initialState = loadState() || {};
+const store = initStore(initialState);
+
 //
 // import findById from './utils/findById';
 //
 // var arr = [{ id: 1, title: 'Her' }, { id: 2, title: 'Snatch' }];
 // console.log('findById', findById(1, arr), findById(4, arr));
-const loggerMiddleware = createLogger();
 
-const store = createStore(reducers, {
-  counter: 10, session: null
-}, applyMiddleware(
-  thunkMiddleware,
-  loggerMiddleware
-));
 
 // Log the initial state
-console.log(store.getState());
+// console.log(store.getState());
 
 // Every time the state changes, log it
 // Note that subscribe() returns a function for unregistering the listener
 // const unsubscribe =
 store.subscribe(() =>
-  console.log(store.getState())
+  saveState(store.getState())
 );
 
-console.log('dispatch increment');
-store.dispatch(increment());
-store.dispatch(decrement());
-store.dispatch(login({ email: 'jonsnow@got.tv' }));
-store.dispatch(decrement());
-store.dispatch(decrement());
-store.dispatch(logout());
-store.dispatch(login({ email: 'danaerystargaryen@got.tv' }));
-store.dispatch(logout());
+// console.log('dispatch increment');
+// store.dispatch(increment());
+// store.dispatch(decrement());
+// store.dispatch(login({ email: 'jonsnow@got.tv' }));
+// store.dispatch(decrement());
+// store.dispatch(decrement());
+// store.dispatch(logout());
+// store.dispatch(login({ email: 'danaerystargaryen@got.tv' }));
+// store.dispatch(logout());
 // store.dispatch(searchMovies('Phantom'));
 // store.dispatch(receiveMovies(movies1));
 // store.dispatch(searchMovies('Phantom of'));

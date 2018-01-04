@@ -32,7 +32,7 @@ export default (state = initialState, action) => {
     return Object.assign({ ...state }, {
       isFetching: false,
       itemsPerQuery: Object.assign({ ...itemsPerQuery }, {
-        [query]: movies
+        [query]: movies.map(m => (m.id))
       }),
       items: updatedMovies
     });

@@ -3,10 +3,23 @@ import { connect } from 'react-redux'
 import {
   login, logout
 } from '../actions';
+import {
+  clearState
+} from '../persist';
 
 class UnboundNavbar extends Component {
+  constructor(props) {
+    super(props);
+    this.onClearState = this.onClearState.bind(this);
+  }
+
+  onClearState() {
+    clearState();
+    window.location.reload();
+  }
+
   render() {
-    const user = this.props.user
+    const { user } = this.props;
     const navContent = user ? (
       <ul className="navbar-nav mr-auto">
         <li className="nav-item"><a className="nav-link" href="#" onClick={this.props.onLogout}>Logout { user.email }</a></li>
@@ -15,7 +28,7 @@ class UnboundNavbar extends Component {
       <ul className="navbar-nav mr-auto">
         <li className="nav-item"><a className="nav-link" href="#" onClick={this.props.onLogin}>Login</a></li>
       </ul>
-    )
+    );
     return(
       <nav className="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
         <a className="navbar-brand" href="#">Navbar</a>
@@ -25,6 +38,7 @@ class UnboundNavbar extends Component {
 
         <div className="collapse navbar-collapse" id="navbarsExampleDefault">
         {navContent}
+        <button className="btn btn-danger my-2 my-sm-0" type="submit" onClick={this.onClearState}>Reset</button>
         </div>
       </nav>
     )
@@ -35,15 +49,15 @@ class UnboundNavbar extends Component {
 const mapStateToProps = state => {
   return {
     user: state.session
-  }
-}
+  };
+};
 
 const mapDispatchToProps = dispatch => {
   return {
     onLogin: () => dispatch(login({ email: 'jonsnow.tv' })),
     onLogout: () => dispatch(logout())
-  }
-}
+  };
+};
 
 const Navbar = connect(
   mapStateToProps,
