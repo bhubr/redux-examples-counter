@@ -1,10 +1,6 @@
-export default (state = 0, action) => {
-  switch (action.type) {
-    case 'INCREMENT':
-      return state + 1
-    case 'DECREMENT':
-      return state - 1
-    default:
-      return state
-  }
-}
+import counter from './counter';
+import session from './session';
+import { combineReducers } from 'redux';
+
+const reducers = combineReducers({ counter, session });
+export default reducers;

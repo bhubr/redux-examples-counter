@@ -1,4 +1,4 @@
-import counter from './index'
+import counter from './counter'
 
 describe('reducers', () => {
   describe('counter', () => {

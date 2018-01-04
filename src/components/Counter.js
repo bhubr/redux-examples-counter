@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import {
+  increment, decrement
+} from '../actions';
 
-class Counter extends Component {
+class UnboundCounter extends Component {
   constructor(props) {
     super(props);
     this.incrementAsync = this.incrementAsync.bind(this);
@@ -44,10 +48,28 @@ class Counter extends Component {
   }
 }
 
-Counter.propTypes = {
+UnboundCounter.propTypes = {
   value: PropTypes.number.isRequired,
   onIncrement: PropTypes.func.isRequired,
   onDecrement: PropTypes.func.isRequired
 }
+
+const mapStateToProps = state => {
+  return {
+    value: state.counter
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onIncrement: () => dispatch(increment()),
+    onDecrement: () => dispatch(decrement())
+  }
+}
+
+const Counter = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UnboundCounter)
 
 export default Counter
