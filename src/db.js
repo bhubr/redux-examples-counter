@@ -50,3 +50,18 @@ export function insertUser(user) {
     return Promise.resolve(newUser);
   }
 }
+
+export function authenticateUser(user) {
+  console.log('Attempting to authenticate user', user);
+  const { email, password } = user;
+  const existing = usersDb.records.find(u => u.email === email);
+  if(! existing) {
+    return Promise.reject(new Error('User with email ' + email + ' not found'));
+  }
+  if(existing.password !== password) {
+    return Promise.reject(new Error('Wrong password'));
+  }
+  const clone = { ...existing };
+  delete clone.password;
+  return Promise.resolve(clone);
+}

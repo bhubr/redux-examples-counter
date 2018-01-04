@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  login, logout
+  loginUser, logoutUser
 } from '../actions';
 import persist from '../persist';
 import config from '../config';
@@ -22,11 +22,11 @@ class UnboundNavbar extends Component {
     const { user } = this.props;
     const navContent = user ? (
       <ul className="navbar-nav mr-auto">
-        <li className="nav-item"><a className="nav-link" href="#" onClick={this.props.onLogout}>Logout { user.email }</a></li>
+        <li className="nav-item"><a className="nav-link" href="#" onClick={this.props.onLogout}>Logged in: { user.email }</a></li>
       </ul>
     ) : (
       <ul className="navbar-nav mr-auto">
-        <li className="nav-item"><a className="nav-link" href="#" onClick={this.props.onLogin}>Login</a></li>
+        <li className="nav-item"><a className="nav-link" href="#">Not logged in</a></li>
       </ul>
     );
     return(
@@ -41,27 +41,27 @@ class UnboundNavbar extends Component {
         <button className="btn btn-danger my-2 my-sm-0" type="submit" onClick={this.onClearState}>Reset</button>
         </div>
       </nav>
-    )
+    );
   }
 }
 
 
 const mapStateToProps = state => {
   return {
-    user: state.session
+    user: state.session.user
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onLogin: () => dispatch(login({ email: 'jonsnow.tv' })),
-    onLogout: () => dispatch(logout())
+    // onLogin: () => dispatch(loginUser({ email: 'jonsnow.tv' })),
+    onLogout: () => dispatch(logoutUser())
   };
 };
 
 const Navbar = connect(
   mapStateToProps,
   mapDispatchToProps
-)(UnboundNavbar)
+)(UnboundNavbar);
 
-export default Navbar
+export default Navbar;

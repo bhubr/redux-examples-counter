@@ -1,13 +1,17 @@
 import config from '../config';
 import {
-  insertUser
+  insertUser,
+  authenticateUser
 } from '../db';
 const { tmdbApiKey } = config;
 
 export const INCREMENT = 'INCREMENT';
 export const DECREMENT = 'DECREMENT';
-export const LOGIN     = 'LOGIN';
-export const LOGOUT    = 'LOGOUT';
+export const LOGIN_USER         = 'LOGIN_USER';
+export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
+export const LOGIN_USER_ERROR   = 'LOGIN_USER_ERROR';
+export const LOGOUT_USER        = 'LOGOUT_USER';
+
 // export const SET_QUERY = 'SET_QUERY';
 export const SEARCH_MOVIES = 'SEARCH_MOVIES';
 export const RECEIVE_MOVIES = 'RECEIVE_MOVIES';
@@ -24,13 +28,6 @@ export function decrement() {
   return { type: DECREMENT };
 }
 
-export function login(user) {
-  return { type: LOGIN, user };
-}
-
-export function logout() {
-  return { type: LOGOUT };
-}
 //
 // export function setMovieQuery(query) {
 //   return {
@@ -72,6 +69,44 @@ export function registerUserError(error) {
   return {
     type: REGISTER_USER_ERROR,
     error
+  };
+}
+
+export function requestLoginUser(user) {
+  return {
+    type: LOGIN_USER,
+    user
+  };
+}
+
+export function logoutUser() {
+  return {
+    type: LOGOUT_USER
+  };
+}
+
+export function loginUserSuccess(user) {
+  console.log('registerUserSuccess', user);
+  return {
+    type: LOGIN_USER_SUCCESS,
+    user
+  };
+}
+
+export function loginUserError(error) {
+  return {
+    type: LOGIN_USER_ERROR,
+    error
+  };
+}
+
+export function loginUser(user)  {
+  return dispatch => {
+    console.log('loginUser', user);
+    dispatch(requestLoginUser(user));
+    return authenticateUser(user)
+    .then(user => dispatch(loginUserSuccess(user)))
+    .catch(err => dispatch(loginUserError(err)));
   };
 }
 

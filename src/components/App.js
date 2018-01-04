@@ -3,6 +3,7 @@ import Navbar from './Navbar';
 import MovieSearchBox from './MovieSearchBox';
 import MovieList from './MovieList';
 import Register from './Register';
+import Login from './Login';
 import UserList from './UserList';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
@@ -34,6 +35,7 @@ class App extends Component {
           </div>
           <div className="col-sm">
             <Register />
+            <Login />
             <UserList />
           </div>
         </div>
