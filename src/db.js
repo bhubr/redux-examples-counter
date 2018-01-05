@@ -65,3 +65,13 @@ export function authenticateUser(user) {
   delete clone.password;
   return Promise.resolve(clone);
 }
+
+export function truncateUsers() {
+  let numRecords = usersDb.records.length;
+  usersDb = {
+    records: [],
+    nextId: 1
+  };
+  persist.save(storageKeys.users, usersDb);
+  return Promise.resolve(numRecords);
+}
